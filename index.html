@@ -4,11 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Crónicas de la Zona - Hoja de Personaje</title>
-    <!-- Tailwind CSS CDN (Script simple para estilos). Si quieres full offline, esto también se podría instalar localmente, pero para empezar está bien así -->
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       body { background-color: #030712; }
-      
       @media print {
         body {
           background-color: white !important;
@@ -16,10 +15,7 @@
           -webkit-print-color-adjust: exact;
           print-color-adjust: exact;
         }
-        /* Hide scrollbars during print */
-        ::-webkit-scrollbar {
-            display: none;
-        }
+        ::-webkit-scrollbar { display: none; }
       }
     </style>
   <script type="importmap">
@@ -36,7 +32,6 @@
 </head>
   <body>
     <div id="root"></div>
-    <!-- Esta línea conecta el HTML con tu código React -->
     <script type="module" src="/index.tsx"></script>
   </body>
 </html>

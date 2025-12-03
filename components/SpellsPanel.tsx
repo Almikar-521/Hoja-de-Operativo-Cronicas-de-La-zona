@@ -160,7 +160,7 @@ export const SpellsPanel: React.FC<Props> = ({ intScore, profBonus, level, prepa
                     <div className="p-2 text-xs grid grid-cols-1 gap-1">
                          <div className="text-gray-400 italic opacity-80">{spell.description}</div>
                          <div className="text-blue-300 font-mono bg-blue-900/10 p-1.5 rounded border border-blue-900/20 mt-1 flex items-start">
-                            <span className="text-blue-500 font-bold mr-1 mt-0.5">>></span> 
+                            <span className="text-blue-500 font-bold mr-1 mt-0.5">{">>"}</span> 
                             <span>{spell.effect}</span>
                          </div>
                     </div>

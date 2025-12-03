@@ -210,7 +210,7 @@ export const Compendium: React.FC<Props> = ({ onClose }) => {
                           <div className="text-sm space-y-2 bg-gray-900/50 p-4 rounded border border-gray-800">
                               {(item.effect || item.benefit) && (
                                   <div className="flex gap-2">
-                                      <span className="text-green-500 font-bold">>>></span>
+                                      <span className="text-green-500 font-bold">{">>>"}</span>
                                       <span className="text-green-100">{item.effect || item.benefit}</span>
                                   </div>
                               )}
