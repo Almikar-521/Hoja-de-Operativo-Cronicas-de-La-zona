@@ -13,8 +13,30 @@ COMO INICIAR:
 SOLUCION DE PROBLEMAS:
 - Si el archivo .bat se cierra inmediatamente, asegúrate de haber instalado Node.js y reinicia tu PC.
 
-SI NADA FUNCIONA (ARRANQUE MANUAL):
-Si el archivo automático falla, sigue estos pasos manuales:
+SI EL ARCHIVO DE INICIO NO FUNCIONA (REPARACION):
+Si el archivo "iniciar_app.bat" falla o quieres crearlo tú mismo:
+1. Abre el Bloc de Notas.
+2. Copia y pega el siguiente código exactamente:
+
+@echo off
+echo ========================================
+echo   INICIANDO HOJA DE PERSONAJE
+echo ========================================
+echo.
+echo [1/2] Verificando e instalando librerias necesarias...
+call npm install
+echo.
+echo [2/2] Abriendo la aplicacion...
+echo.
+echo POR FAVOR NO CIERRES ESTA VENTANA NEGRA
+echo.
+call npm run dev
+pause
+
+3. Guarda el archivo con el nombre "iniciar_app.bat" (asegúrate de que no termine en .txt).
+4. Ejecútalo.
+
+SI NADA FUNCIONA (ARRANQUE MANUAL POR CONSOLA):
 1. Entra en la carpeta de la hoja de personaje.
 2. Haz clic en la barra de direcciones de la carpeta (arriba, donde dice la ruta), borra todo, escribe "cmd" y dale Enter.
 3. Se abrirá una ventana negra. Escribe lo siguiente y dale Enter:
