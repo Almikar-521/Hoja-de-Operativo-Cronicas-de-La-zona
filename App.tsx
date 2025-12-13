@@ -12,6 +12,7 @@ import { RadiationPanel } from './components/RadiationPanel';
 import { MagicStressPanel } from './components/MagicStressPanel';
 import { ExhaustionPanel } from './components/ExhaustionPanel';
 import { ConditionsPanel } from './components/ConditionsPanel';
+import { IdentityPanel } from './components/IdentityPanel';
 import { ArtifactSlots } from './components/ArtifactSlots';
 import { TalentStore } from './components/TalentStore';
 import { GeneralStore } from './components/GeneralStore';
@@ -25,6 +26,7 @@ const INITIAL_CHAR: CharacterState = {
   level: 1,
   background: '',
   xp: 0,
+  notes: '',
   attributes: { STR: 10, DEX: 10, CON: 10, INT: 10, WIS: 10, CHA: 10 },
   proficiencies: [],
   skillProficiencies: [],
@@ -428,141 +430,61 @@ export default function App() {
         style={{ display: 'none' }} 
       />
 
+      {/* HEADER: Simplified */}
       <header className="bg-gray-900 border-b border-gray-800 sticky top-0 z-40 shadow-lg bg-opacity-95 backdrop-blur-md print:hidden">
-        <div className="max-w-7xl mx-auto px-4 h-24 flex items-center justify-between gap-4">
+        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
             
-            <div className="flex items-center gap-6 flex-1 min-w-0">
-                <div className="hidden lg:block flex-none">
-                    <h1 className="text-2xl font-black text-yellow-500 uppercase tracking-widest leading-none">
-                        Crónicas <br/><span className="text-lg text-gray-400">de la Zona</span>
-                    </h1>
-                </div>
-                 <div className="lg:hidden flex-none">
-                    <h1 className="text-xl font-black text-yellow-500 uppercase tracking-widest leading-none">CDLZ</h1>
+            <div className="flex items-center gap-4 flex-1">
+                <div className="flex-none">
+                    <h1 className="text-xl md:text-2xl font-black text-yellow-500 uppercase tracking-widest leading-none">CDLZ</h1>
                 </div>
 
-                {/* MODIFIED HEADER BOX */}
-                <div className="flex flex-col justify-center bg-black/40 p-3 rounded-lg border border-gray-700 flex-1 min-w-0 max-w-3xl shadow-sm">
-                    <div className="flex flex-col gap-1.5 w-full">
-                        <input 
-                            className="bg-transparent border-none w-full text-xl font-bold text-white placeholder-gray-600 outline-none leading-none truncate uppercase tracking-wide" 
-                            placeholder="NOMBRE DEL OPERATIVO"
-                            value={char.name}
-                            onChange={e => setChar(p => ({...p, name: e.target.value}))}
-                        />
-                        <div className="flex items-center gap-2 text-xs flex-wrap">
-                            <select 
-                                value={char.class} 
-                                onChange={e => setChar(p => ({...p, class: e.target.value as any}))}
-                                className="bg-gray-800 text-blue-300 font-bold rounded px-2 py-1 outline-none border border-gray-700 hover:border-blue-500 cursor-pointer flex-none"
-                            >
-                                <option value="" disabled>CLASE</option>
-                                {CLASSES.map(c => <option key={c} value={c}>{c}</option>)}
-                            </select>
-                            
-                            <select 
-                                value={char.background} 
-                                onChange={e => handleChangeBackground(e.target.value)}
-                                className="bg-gray-800 text-gray-300 rounded px-2 py-1 outline-none border border-gray-700 hover:border-yellow-600 cursor-pointer flex-1 min-w-[100px] truncate"
-                            >
-                                <option value="" disabled>TRASFONDO</option>
-                                {TRAITS_CATALOG.filter(t => t.type === 'Background').map(t => (
-                                    <option key={t.id} value={t.id}>{t.name}</option>
-                                ))}
-                            </select>
-
-                            <div className="w-px h-5 bg-gray-700 mx-1 hidden sm:block"></div>
-
-                            <div className="flex items-center bg-gray-800 rounded px-2 py-1 border border-gray-700 gap-3 flex-none ml-auto sm:ml-0">
-                                <div className="flex items-baseline gap-1.5">
-                                    <span className="text-[9px] text-gray-500 font-bold">NVL</span>
-                                    <input 
-                                        type="number" 
-                                        value={char.level} 
-                                        onChange={(e) => setChar(p => ({...p, level: Math.max(1, parseInt(e.target.value) || 1)}))}
-                                        className="w-8 bg-transparent text-white font-bold text-center outline-none border-b border-transparent focus:border-gray-500 transition-colors"
-                                    />
-                                </div>
-                                <div className="w-px h-3 bg-gray-600"></div>
-                                <div className="flex items-baseline gap-1.5">
-                                    <span className="text-[9px] text-gray-500 font-bold">EXP</span>
-                                    <input 
-                                        type="number" 
-                                        value={char.xp} 
-                                        onChange={(e) => setChar(p => ({...p, xp: Math.max(0, parseInt(e.target.value) || 0)}))}
-                                        className="w-16 bg-transparent text-gray-300 text-center outline-none border-b border-transparent focus:border-gray-500 transition-colors"
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                {/* Name Input - Primary Header Focus */}
+                <div className="flex-1 max-w-2xl bg-black/40 px-3 py-1.5 rounded border border-gray-700 focus-within:border-yellow-600 transition-colors">
+                    <input 
+                        className="bg-transparent border-none w-full text-lg md:text-xl font-bold text-white placeholder-gray-600 outline-none truncate" 
+                        placeholder="NOMBRE DEL OPERATIVO"
+                        value={char.name}
+                        onChange={e => setChar(p => ({...p, name: e.target.value}))}
+                    />
                 </div>
             </div>
 
-            <div className="flex items-center gap-4 flex-none">
-                <div className="hidden xl:flex flex-col items-end bg-yellow-900/10 border border-yellow-900/30 rounded-lg px-4 py-1 hover:bg-yellow-900/20 transition-colors group">
-                    <span className="text-[9px] text-yellow-600 font-bold uppercase tracking-widest mb-0.5 group-hover:text-yellow-500">Piezas de Oro</span>
-                    <div className="flex items-baseline gap-1">
-                        <input 
-                            type="number" 
-                            value={char.gold}
-                            onChange={(e) => setChar(p => ({...p, gold: Math.max(0, parseInt(e.target.value) || 0)}))}
-                            className="w-24 bg-transparent text-right text-xl font-mono font-bold text-yellow-400 outline-none placeholder-yellow-800"
-                        />
-                        <span className="text-xs text-yellow-700 font-bold">PO</span>
-                    </div>
-                </div>
-
-                <div className="hidden xl:flex flex-col items-end bg-purple-900/10 border border-purple-900/30 rounded-lg px-4 py-1 hover:bg-purple-900/20 transition-colors group">
-                    <span className="text-[9px] text-purple-500 font-bold uppercase tracking-widest mb-0.5 group-hover:text-purple-400">Esencia Anómala</span>
-                    <div className="flex items-baseline gap-1">
-                        <input 
-                            type="number" 
-                            value={char.anomalousEssence}
-                            onChange={(e) => setChar(p => ({...p, anomalousEssence: Math.max(0, parseInt(e.target.value) || 0)}))}
-                            className="w-24 bg-transparent text-right text-xl font-mono font-bold text-purple-400 outline-none placeholder-purple-800"
-                        />
-                        <span className="text-xs text-purple-700 font-bold">EA</span>
-                    </div>
-                </div>
-
-                <div className="h-8 w-px bg-gray-700 mx-1 hidden sm:block"></div>
-
-                <div className="hidden sm:flex items-center gap-1">
-                    <button 
-                        onClick={handleReset}
-                        className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-white hover:bg-red-900/50 rounded transition-colors"
-                        title="Nuevo Personaje (Reset)"
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    </button>
-                    <button 
-                        onClick={handleLoadClick}
-                        className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors"
-                        title="Cargar Personaje (.json)"
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
-                    </button>
-                    <button 
-                        onClick={handleSave}
-                        className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors"
-                        title="Guardar Personaje (.json)"
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" /></svg>
-                    </button>
-                    <button 
-                        onClick={handlePrint}
-                        className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors"
-                        title="Exportar a PDF / Imprimir"
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" /></svg>
-                    </button>
-                </div>
-
+            {/* Action Buttons */}
+            <div className="flex items-center gap-2">
+                <button 
+                    onClick={handleReset}
+                    className="p-2 text-gray-400 hover:text-white hover:bg-red-900/30 rounded border border-transparent hover:border-red-900/50 transition-colors"
+                    title="Reset"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                </button>
+                <div className="h-6 w-px bg-gray-700 hidden sm:block"></div>
+                <button 
+                    onClick={handleLoadClick}
+                    className="p-2 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors hidden sm:block"
+                    title="Cargar"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
+                </button>
+                <button 
+                    onClick={handleSave}
+                    className="p-2 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors"
+                    title="Guardar"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" /></svg>
+                </button>
+                <button 
+                    onClick={handlePrint}
+                    className="p-2 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors hidden sm:block"
+                    title="Imprimir"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" /></svg>
+                </button>
                 <button 
                     onClick={() => setShowCompendium(true)}
-                    className="ml-2 w-10 h-10 flex items-center justify-center bg-gray-800 text-cyan-500 rounded hover:bg-cyan-900/30 border border-gray-700 hover:border-cyan-500 transition-all print:hidden"
-                    title="Códice de la Zona"
+                    className="ml-2 w-10 h-10 flex items-center justify-center bg-gray-800 text-cyan-500 rounded border border-gray-700 hover:border-cyan-500 hover:bg-cyan-900/20 transition-all"
+                    title="Códice"
                 >
                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
                 </button>
@@ -573,6 +495,15 @@ export default function App() {
 
       <main className="max-w-7xl mx-auto p-4 grid grid-cols-1 lg:grid-cols-12 gap-6 print:block print:p-0">
           
+          {/* NEW: Identity Panel (Takes full width on top) */}
+          <div className="lg:col-span-12 print:break-inside-avoid">
+             <IdentityPanel 
+                char={char} 
+                onChange={(updates) => setChar(p => ({...p, ...updates}))} 
+                onChangeBackground={handleChangeBackground}
+             />
+          </div>
+
           <div className="lg:col-span-3 space-y-6 print:mb-6">
               <div className="print:break-inside-avoid">
                   <h3 className="text-yellow-500 font-bold border-b border-gray-700 pb-2 mb-4 text-sm uppercase tracking-wider print:text-black print:border-black">Atributos</h3>

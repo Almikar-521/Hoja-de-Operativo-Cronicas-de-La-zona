@@ -92,6 +92,7 @@ export interface CharacterState {
   level: number;
   background: string; // Background ID
   xp: number;
+  notes: string; // Biography or Mission Notes
   
   attributes: Record<Attribute, number>;
   proficiencies: Attribute[]; 

@@ -19,6 +19,19 @@ const ALL_ITEMS = [
 // Create a Map for instant access by ID
 const ITEM_MAP = new Map(ALL_ITEMS.map(item => [item.id, item]));
 
+const NO_ARMOR: Armor = {
+    id: 'unarmored',
+    name: 'Sin Blindaje',
+    type: 'Light',
+    acBase: 10,
+    dexBonus: 99,
+    weight: 0,
+    ra: 0,
+    rarity: 'Civil',
+    stealthDisadvantage: false,
+    price: 0
+};
+
 export const getItem = (id: string | null) => {
     if (!id) return null;
     return ITEM_MAP.get(id) || null;
@@ -30,8 +43,8 @@ export const getArmorStats = (id: string | null): Armor => {
     if (item && (item as any).acBase !== undefined) {
         return item as Armor;
     }
-    // Return a dummy default armor if not found or not armor
-    return ARMOR_CATALOG[0]; 
+    // Return default unarmored stats
+    return NO_ARMOR; 
 };
 
 // --- END OPTIMIZATION ---
