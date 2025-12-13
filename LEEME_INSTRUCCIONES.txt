@@ -1,0 +1,15 @@
+INSTRUCCIONES PARA EJECUTAR LA HOJA DE PERSONAJE
+================================================
+
+REQUISITO UNICO:
+Necesitas tener instalado "Node.js" en tu computadora.
+Si no lo tienes, descárgalo gratis aquí: https://nodejs.org/ (Baja la versión que dice "LTS").
+
+COMO INICIAR:
+1. Solo haz doble clic en el archivo "iniciar_app.bat".
+2. Espera a que termine de cargar (la primera vez tardará un poco instalando cosas).
+3. Se abrirá tu navegador automáticamente con la hoja de personaje.
+
+SOLUCION DE PROBLEMAS:
+- Si el archivo .bat se cierra inmediatamente, asegúrate de haber instalado Node.js.
+- Si dice "npm no se reconoce", reinicia tu computadora tras instalar Node.js.
