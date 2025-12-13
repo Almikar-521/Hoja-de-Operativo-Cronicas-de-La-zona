@@ -2,12 +2,17 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#030712" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>Crónicas de la Zona - Hoja de Personaje</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-      body { background-color: #030712; }
+      body { background-color: #030712; overscroll-behavior-y: none; }
+      /* Prevenir el pull-to-refresh en móvil que recarga la app accidentalmente */
       @media print {
         body {
           background-color: white !important;
@@ -25,7 +30,8 @@
     "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
     "react/": "https://aistudiocdn.com/react@^19.2.1/",
     "vite": "https://aistudiocdn.com/vite@^7.2.6",
-    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1"
+    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1",
+    "vite-plugin-pwa": "https://esm.sh/vite-plugin-pwa@^1.2.0"
   }
 }
 </script>
