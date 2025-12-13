@@ -8,8 +8,17 @@ Si no lo tienes, descárgalo gratis aquí: https://nodejs.org/ (Baja la versión
 COMO INICIAR:
 1. Solo haz doble clic en el archivo "iniciar_app.bat".
 2. Espera a que termine de cargar (la primera vez tardará un poco instalando cosas).
-3. Se abrirá tu navegador automáticamente con la hoja de personaje.
+3. Se abrirá tu navegador automáticamente con la hoja de personaje (o visita http://localhost:5173).
 
 SOLUCION DE PROBLEMAS:
-- Si el archivo .bat se cierra inmediatamente, asegúrate de haber instalado Node.js.
-- Si dice "npm no se reconoce", reinicia tu computadora tras instalar Node.js.
+- Si el archivo .bat se cierra inmediatamente, asegúrate de haber instalado Node.js y reinicia tu PC.
+
+SI NADA FUNCIONA (ARRANQUE MANUAL):
+Si el archivo automático falla, sigue estos pasos manuales:
+1. Entra en la carpeta de la hoja de personaje.
+2. Haz clic en la barra de direcciones de la carpeta (arriba, donde dice la ruta), borra todo, escribe "cmd" y dale Enter.
+3. Se abrirá una ventana negra. Escribe lo siguiente y dale Enter:
+   npm install
+4. Espera a que termine. Luego escribe lo siguiente y dale Enter:
+   npm run dev
+5. Verás un link que dice "Local: http://localhost:5173". Copia ese link y pégalo en tu navegador Chrome o Edge.
