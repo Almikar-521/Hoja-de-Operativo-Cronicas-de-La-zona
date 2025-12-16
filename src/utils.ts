@@ -98,7 +98,6 @@ export const calculateAC = (char: CharacterState): number => {
   const extraItems = [char.equipment.head, ...char.equippedArtifacts];
   extraItems.forEach(id => {
       const item = getItem(id);
-      // Ensure item has an effect property before checking
       if (item && 'effect' in item && item.effect) {
           const match = item.effect.match(/\+(\d+)\s*CA/);
           if (match) {

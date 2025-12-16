@@ -13,14 +13,15 @@ import {
   PROTOCOLS_CATALOG,
   TALENTS_CATALOG,
   TRAITS_CATALOG,
-  MUTATIONS_CATALOG
+  MUTATIONS_CATALOG,
+  WEAPON_PROPERTIES_GLOSSARY
 } from '../constants';
 
 interface Props {
   onClose: () => void;
 }
 
-type Category = 'Armas' | 'Blindaje' | 'Equipo' | 'Artefactos' | 'Protocolos' | 'Talentos' | 'Rasgos' | 'Mutaciones';
+type Category = 'Armas' | 'Glosario' | 'Blindaje' | 'Equipo' | 'Artefactos' | 'Protocolos' | 'Talentos' | 'Rasgos' | 'Mutaciones';
 
 export const Compendium: React.FC<Props> = ({ onClose }) => {
   const [activeCategory, setActiveCategory] = useState<Category>('Armas');
@@ -44,6 +45,7 @@ export const Compendium: React.FC<Props> = ({ onClose }) => {
   const getDataSource = () => {
     switch(activeCategory) {
         case 'Armas': return WEAPONS_CATALOG;
+        case 'Glosario': return WEAPON_PROPERTIES_GLOSSARY.map(p => ({ name: p.id, description: p.desc, type: 'Propiedad de Arma' }));
         case 'Blindaje': return ARMOR_CATALOG;
         case 'Equipo': return allGear;
         case 'Artefactos': return artifacts;
@@ -189,11 +191,21 @@ export const Compendium: React.FC<Props> = ({ onClose }) => {
                               {item.description}
                               {item.properties && (
                                   <div className="flex flex-wrap gap-2 mt-3">
-                                      {item.properties.map((p: string, idx: number) => (
-                                          <span key={idx} className="text-xs bg-gray-800 px-2 py-1 rounded text-cyan-200 border border-gray-600 shadow-sm">
-                                              {p}
-                                          </span>
-                                      ))}
+                                      {item.properties.map((p: string, idx: number) => {
+                                          // Find toolip in glossary if exists
+                                          const glossaryItem = WEAPON_PROPERTIES_GLOSSARY.find(g => g.id === p);
+                                          return (
+                                            <span key={idx} className="group relative text-xs bg-gray-800 px-2 py-1 rounded text-cyan-200 border border-gray-600 shadow-sm cursor-help">
+                                                {p}
+                                                {glossaryItem && (
+                                                    <span className="absolute bottom-full left-0 mb-2 w-64 p-3 bg-black text-white text-[11px] leading-snug rounded border border-gray-500 opacity-0 group-hover:opacity-100 pointer-events-none z-50 shadow-xl transition-opacity">
+                                                        <span className="block font-bold text-yellow-500 mb-1 border-b border-gray-700 pb-1">{p}</span>
+                                                        {glossaryItem.desc}
+                                                    </span>
+                                                )}
+                                            </span>
+                                          )
+                                      })}
                                   </div>
                               )}
                           </div>
@@ -266,7 +278,7 @@ export const Compendium: React.FC<Props> = ({ onClose }) => {
 
                 {/* Categories */}
                 <div className="flex overflow-x-auto p-2 gap-2 border-b border-gray-800 scrollbar-hide bg-black/20">
-                    {(['Armas', 'Blindaje', 'Equipo', 'Artefactos', 'Protocolos', 'Talentos', 'Rasgos', 'Mutaciones'] as Category[]).map(cat => (
+                    {(['Armas', 'Glosario', 'Blindaje', 'Equipo', 'Artefactos', 'Protocolos', 'Talentos', 'Rasgos', 'Mutaciones'] as Category[]).map(cat => (
                         <button
                             key={cat}
                             onClick={() => { setActiveCategory(cat); setSelectedItem(null); }}

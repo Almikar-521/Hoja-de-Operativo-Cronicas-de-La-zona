@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { CharacterState, Weapon, Armor } from '../types';
 import { WEAPONS_CATALOG, ARMOR_CATALOG, HEAD_CATALOG, FACE_CATALOG, EYES_CATALOG, EARS_CATALOG, RIG_CATALOG, BACKPACK_CATALOG } from '../constants';
@@ -17,18 +16,38 @@ export const PaperDoll: React.FC<Props> = ({ char, updateEquipment }) => {
 
   const currentRA = getArmorRa(char.equipment.body);
 
-  // Helper to filter catalogs based on what is in the inventory OR already equipped
-  const getOwnedItems = (fullCatalog: any[], slotId: string | null) => {
-      return fullCatalog.filter(item => {
-          const inInventory = char.inventory.some(inv => inv.itemId === item.id);
-          const isEquipped = item.id === slotId;
-          return inInventory || isEquipped;
+  // Helper: Count how many times an item is equipped across ALL slots
+  const countEquippedInstances = (itemId: string) => {
+      let count = 0;
+      Object.values(char.equipment).forEach(equippedId => {
+          if (equippedId === itemId) count++;
       });
+      return count;
   };
 
   const renderSelect = (slot: keyof CharacterState['equipment'], fullCatalog: any[], label: string) => {
-    // We filter the full catalog to show ONLY owned items
-    const ownedOptions = getOwnedItems(fullCatalog, char.equipment[slot]);
+    // We filter the catalog to show items that are:
+    // 1. In inventory OR currently equipped in THIS slot
+    // 2. AND (Available Quantity > Currently Equipped Count OR It is equipped in THIS slot)
+    
+    const availableOptions = fullCatalog.filter(item => {
+        const inventoryItem = char.inventory.find(inv => inv.itemId === item.id);
+        
+        // If not in inventory (and not equipped), hide it
+        if (!inventoryItem && char.equipment[slot] !== item.id) return false;
+
+        // If currently equipped in this exact slot, show it
+        if (char.equipment[slot] === item.id) return true;
+
+        // If in inventory, check if we have spare copies
+        if (inventoryItem) {
+            const equippedCount = countEquippedInstances(item.id);
+            // We can show it if we have more in stack than are currently used
+            return inventoryItem.quantity > equippedCount;
+        }
+
+        return false;
+    });
 
     return (
         <div className="mb-2">
@@ -39,10 +58,10 @@ export const PaperDoll: React.FC<Props> = ({ char, updateEquipment }) => {
             className="w-full bg-gray-800 text-sm text-white border border-gray-700 rounded p-1 focus:border-yellow-500 outline-none"
         >
             <option value="">-- Vacío --</option>
-            {ownedOptions.length === 0 && char.equipment[slot] === null ? (
+            {availableOptions.length === 0 && char.equipment[slot] === null ? (
                 <option disabled>Sin equipo disponible</option>
             ) : (
-                ownedOptions.map(opt => (
+                availableOptions.map(opt => (
                 <option key={opt.id} value={opt.id}>{opt.name}</option>
                 ))
             )}

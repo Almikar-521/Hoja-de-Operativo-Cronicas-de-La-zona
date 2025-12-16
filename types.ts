@@ -39,7 +39,7 @@ export interface Armor {
 export interface Item {
   id: string;
   name: string;
-  type: 'Medical' | 'Food' | 'Ammo' | 'Explosive' | 'Tech' | 'Valuable' | 'Artifact' | 'Trophy' | 'Tool' | 'Vehicle' | 'Base';
+  type: 'Medical' | 'Food' | 'Ammo' | 'Explosive' | 'Tech' | 'Valuable' | 'Artifact' | 'Trophy' | 'Tool' | 'Vehicle' | 'Base' | 'Anomala';
   weight: number;
   effect?: string;
   cost: number; // In PO

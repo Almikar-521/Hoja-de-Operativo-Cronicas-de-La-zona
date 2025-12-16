@@ -9,13 +9,14 @@ interface Props {
   value: number;
   proficient: boolean;
   pb: number; // Proficiency Bonus
+  extraSaveMod?: number; // New prop for things like mutations
   onChange: (val: number) => void;
   onToggleProf: () => void;
 }
 
-export const StatBox: React.FC<Props> = ({ label, attr, value, proficient, pb, onChange, onToggleProf }) => {
+export const StatBox: React.FC<Props> = ({ label, attr, value, proficient, pb, extraSaveMod = 0, onChange, onToggleProf }) => {
   const mod = getModifier(value);
-  const save = mod + (proficient ? pb : 0);
+  const save = mod + (proficient ? pb : 0) + extraSaveMod;
 
   return (
     <div className="flex flex-col border border-gray-600 rounded bg-gray-900 p-2 h-24 justify-between relative overflow-hidden group hover:border-gray-500 transition-colors shadow-sm">
@@ -44,8 +45,13 @@ export const StatBox: React.FC<Props> = ({ label, attr, value, proficient, pb, o
         
         <div className="text-right">
              <span className="block text-[8px] text-gray-500 uppercase">Salv</span>
-             <span className={`font-mono text-lg font-bold ${save >= 0 ? 'text-blue-300' : 'text-red-400'}`}>
-                 {save >= 0 ? `+${save}` : save}
+             <span className={`font-mono text-lg font-bold flex flex-col items-end leading-none ${save >= 0 ? 'text-blue-300' : 'text-red-400'}`}>
+                 <span>{save >= 0 ? `+${save}` : save}</span>
+                 {extraSaveMod !== 0 && (
+                     <span className={`text-[8px] ${extraSaveMod > 0 ? 'text-green-500' : 'text-red-500'}`}>
+                         ({extraSaveMod > 0 ? '+' : ''}{extraSaveMod})
+                     </span>
+                 )}
              </span>
         </div>
       </div>

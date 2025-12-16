@@ -9,7 +9,7 @@ interface Props {
   onClose: () => void;
 }
 
-type MainTab = 'Armamento' | 'Blindaje' | 'Equipo Táctico' | 'Artefactos' | 'Suministros' | 'Vehículos';
+type MainTab = 'Armamento' | 'Blindaje' | 'Equipo Táctico' | 'Artefactos' | 'Suministros' | 'Vehículos' | 'Propiedades';
 type SubCategory = 'Todas' | 'Pistolas' | 'Subfusiles' | 'Escopetas' | 'Asalto' | 'LMG' | 'DMR/Sniper' | 'Anti-Mat' | 'Melee' | 'Anómala' | 'Ligera' | 'Media' | 'Pesada' | 'Exo' | 'Cabeza' | 'Máscaras' | 'Ojos' | 'Oídos' | 'Chalecos' | 'Mochilas' | 'Tier 1' | 'Tier 2' | 'Tier 3' | 'Legendario' | 'Médico' | 'Munición' | 'Tech' | 'Explosivos';
 
 export const GeneralStore: React.FC<Props> = ({ char, onBuyItem, onClose }) => {
@@ -26,6 +26,7 @@ export const GeneralStore: React.FC<Props> = ({ char, onBuyItem, onClose }) => {
           case 'Artefactos': setActiveSub('Tier 1'); break;
           case 'Suministros': setActiveSub('Médico'); break;
           case 'Vehículos': setActiveSub('Todas'); break;
+          case 'Propiedades': setActiveSub('Todas'); break;
       }
   };
 
@@ -36,9 +37,17 @@ export const GeneralStore: React.FC<Props> = ({ char, onBuyItem, onClose }) => {
     const isLegendary = item.rarity === 'Legendaria' || item.tier === 4 || price === 0;
 
     let subLabel = "";
-    if (type === 'Weapon') subLabel = `${item.damage} ${item.damageType}`;
-    if (type === 'Armor') subLabel = `CA ${item.acBase} ${item.type}`;
-    if (type === 'Item') subLabel = item.effect || item.type;
+    if (type === 'Weapon') {
+        const props = item.properties?.length ? ` [${item.properties.join(', ')}]` : '';
+        subLabel = `${item.damage} ${item.damageType} • ${item.range}ft${props}`;
+    }
+    else if (type === 'Armor') {
+        subLabel = `CA ${item.acBase} ${item.type}`;
+        if (item.effect) subLabel += ` • ${item.effect}`;
+    }
+    else if (type === 'Item') {
+        subLabel = item.effect || item.type;
+    }
     
     const tierLabel = item.tier ? `TIER ${item.tier}` : '';
 
@@ -53,10 +62,15 @@ export const GeneralStore: React.FC<Props> = ({ char, onBuyItem, onClose }) => {
             <span className={`font-bold text-sm leading-tight ${isLegendary ? 'text-yellow-300' : 'text-gray-200'}`}>{item.name}</span>
             <span className="text-yellow-500 font-mono text-xs whitespace-nowrap ml-2">{price === 0 ? 'Invaluable' : `${price} PO`}</span>
           </div>
+          
           <div className="flex justify-between items-center text-xs text-gray-400 mt-1">
-             <span className="truncate pr-2">{subLabel}</span>
              <span className="whitespace-nowrap">{weight > 0 ? `${weight} lbs` : '-'}</span>
           </div>
+
+          <div className="text-[10px] text-gray-300 italic mt-2 min-h-[2.5em] leading-tight opacity-90 bg-black/20 p-2 rounded whitespace-pre-wrap">
+              {subLabel}
+          </div>
+
           <div className="flex gap-1 mt-2 flex-wrap">
             {item.rarity && (
                 <span className={`text-[9px] px-1.5 py-0.5 rounded uppercase border ${
@@ -162,7 +176,10 @@ export const GeneralStore: React.FC<Props> = ({ char, onBuyItem, onClose }) => {
           return items.map(i => renderItemCard(i, 'Item'));
       }
       case 'Vehículos': {
-          return ITEMS_CATALOG.filter(i => i.type === 'Vehicle' || i.type === 'Base').map(i => renderItemCard(i, 'Item'));
+          return ITEMS_CATALOG.filter(i => i.type === 'Vehicle').map(i => renderItemCard(i, 'Item'));
+      }
+      case 'Propiedades': {
+          return ITEMS_CATALOG.filter(i => i.type === 'Base').map(i => renderItemCard(i, 'Item'));
       }
       default: return [];
     }
@@ -234,7 +251,7 @@ export const GeneralStore: React.FC<Props> = ({ char, onBuyItem, onClose }) => {
 
         {/* Main Tabs */}
         <div className="flex border-b border-gray-700 bg-gray-900 flex-none overflow-x-auto scrollbar-hide">
-             {(['Armamento', 'Blindaje', 'Equipo Táctico', 'Artefactos', 'Suministros', 'Vehículos'] as MainTab[]).map(tab => (
+             {(['Armamento', 'Blindaje', 'Equipo Táctico', 'Artefactos', 'Suministros', 'Vehículos', 'Propiedades'] as MainTab[]).map(tab => (
                 <button 
                   key={tab}
                   onClick={() => changeTab(tab)}
@@ -250,7 +267,7 @@ export const GeneralStore: React.FC<Props> = ({ char, onBuyItem, onClose }) => {
         </div>
 
         {/* Sub Category Filters */}
-        {activeTab !== 'Vehículos' && (
+        {activeTab !== 'Vehículos' && activeTab !== 'Propiedades' && (
             <div className="bg-gray-900 p-2 border-b border-gray-800 flex-none">
                 {renderSubTabs()}
             </div>

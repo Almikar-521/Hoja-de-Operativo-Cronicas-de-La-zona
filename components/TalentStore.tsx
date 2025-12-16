@@ -211,13 +211,15 @@ export const TalentStore: React.FC<Props> = ({ char, onBuyTalent, onBuyAttribute
                 </div>
 
                 {/* Mutation Table Hint */}
-                <div className="bg-red-900/20 p-4 rounded border border-red-900 text-center">
-                    <h4 className="text-red-400 font-bold uppercase text-sm mb-2">⚠ Sobrecarga Genética ⚠</h4>
-                    <p className="text-xs text-red-300">
-                        Al gastar EA, debes realizar una Salvación de Constitución (CD 10 + Coste/1000). 
-                        Si fallas, tu cuerpo rechaza la evolución y sufres una Mutación aleatoria.
-                        <br/>
-                        <span className="italic mt-2 block opacity-70">(Consulta la Tabla de Mutaciones al DJ)</span>
+                <div className="bg-red-900/10 p-4 rounded border border-red-900/50 text-center">
+                    <h4 className="text-red-400 font-bold uppercase text-sm mb-2 flex items-center justify-center gap-2">
+                        <span>⚠</span> Proceso Automático: Sobrecarga Genética
+                    </h4>
+                    <p className="text-xs text-gray-400">
+                        Al confirmar la compra, el sistema realizará automáticamente una <strong>Salvación de Constitución</strong> (CD 10 + Coste/1000).
+                        <br/><br/>
+                        <span className="text-green-400">Éxito:</span> Asimilas la mejora correctamente.<br/>
+                        <span className="text-red-400">Fallo:</span> Pierdes el EA, la mejora es rechazada y tu cuerpo sufre una <strong>Mutación Aleatoria</strong>.
                     </p>
                 </div>
 
