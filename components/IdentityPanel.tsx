@@ -1,5 +1,6 @@
+
 import React from 'react';
-import { CharacterState } from '../types';
+import { CharacterState, Attribute } from '../types';
 import { CLASSES, TRAITS_CATALOG } from '../constants';
 
 interface Props {
@@ -9,6 +10,22 @@ interface Props {
 }
 
 export const IdentityPanel: React.FC<Props> = ({ char, onChange, onChangeBackground }) => {
+  
+  const handleClassChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+      const newClass = e.target.value;
+      
+      // Automatic Save Proficiencies based on Class
+      let newProfs: Attribute[] = [];
+      if (newClass === 'Tank') newProfs = ['STR', 'CON'];
+      else if (newClass === 'DPS') newProfs = ['DEX', 'INT'];
+      else if (newClass === 'Support') newProfs = ['WIS', 'CHA'];
+
+      onChange({ 
+          class: newClass as any,
+          proficiencies: newProfs 
+      });
+  };
+
   return (
     <div className="bg-gray-900 border border-cyan-900/50 p-4 rounded-lg shadow-lg relative overflow-hidden group">
         {/* Decorative corner */}
@@ -23,7 +40,7 @@ export const IdentityPanel: React.FC<Props> = ({ char, onChange, onChangeBackgro
                 <label className="block text-[10px] text-cyan-500 font-bold uppercase tracking-widest mb-1">Clase Operativa</label>
                 <select 
                     value={char.class} 
-                    onChange={e => onChange({ class: e.target.value as any })}
+                    onChange={handleClassChange}
                     className="w-full bg-gray-950 text-white font-bold rounded border border-gray-700 p-2 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none transition-all uppercase"
                 >
                     <option value="" disabled>SELECCIONAR CLASE</option>

@@ -44,11 +44,16 @@ export const StatBox: React.FC<Props> = ({ label, attr, value, proficient, pb, e
         </div>
         
         <div className="text-right">
-             <span className="block text-[8px] text-gray-500 uppercase">Salv</span>
+             <span className="block text-[8px] text-gray-500 uppercase">Salvación</span>
              <span className={`font-mono text-lg font-bold flex flex-col items-end leading-none ${save >= 0 ? 'text-blue-300' : 'text-red-400'}`}>
                  <span>{save >= 0 ? `+${save}` : save}</span>
+                 {proficient && (
+                     <span className="text-[9px] text-yellow-500 font-bold" title="Bono de Competencia incluido">
+                         (+{pb} PB)
+                     </span>
+                 )}
                  {extraSaveMod !== 0 && (
-                     <span className={`text-[8px] ${extraSaveMod > 0 ? 'text-green-500' : 'text-red-500'}`}>
+                     <span className={`text-[9px] ${extraSaveMod > 0 ? 'text-green-500' : 'text-red-500'}`}>
                          ({extraSaveMod > 0 ? '+' : ''}{extraSaveMod})
                      </span>
                  )}
