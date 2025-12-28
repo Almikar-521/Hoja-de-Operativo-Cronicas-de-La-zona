@@ -80,28 +80,34 @@ export const useCharacter = () => {
   }, [char.equipment.body]);
 
   // --- HP CALCULATION LOGIC ---
+  // BUG FIX: Only recalculate HP when medula artifact status changes (not all artifacts)
+  const hasMedula = useMemo(() =>
+      char.equippedArtifacts.includes('medula'),
+      [char.equippedArtifacts]
+  );
+
   useEffect(() => {
     setChar(prev => {
         const newMax = calculateMaxHP(prev);
         if (newMax !== prev.hpMax) {
             const diff = newMax - prev.hpMax;
             let newCurrent = prev.hpCurrent;
-            
+
             if (diff > 0) {
                 newCurrent += diff;
             } else {
                 newCurrent = Math.min(newCurrent, newMax);
             }
 
-            return { 
-                ...prev, 
+            return {
+                ...prev,
                 hpMax: newMax,
                 hpCurrent: Math.max(0, newCurrent)
             };
         }
         return prev;
     });
-  }, [char.class, char.level, char.attributes.CON, char.radiationLevel, char.exhaustion, char.equippedArtifacts]);
+  }, [char.class, char.level, char.attributes.CON, char.radiationLevel, char.exhaustion, hasMedula]);
 
   // --- DERIVED STATS ---
   const pb = useMemo(() => Math.ceil(char.level / 4) + 1, [char.level]);
@@ -179,18 +185,25 @@ export const useCharacter = () => {
         newInventory[existingIdx] = { ...newInventory[existingIdx], quantity: nextQty };
         
         if (qty < 0) {
-             const equippedCount = Object.values(newEquipment).filter(id => id === itemId).length;
-             const artifactCount = newArtifacts.filter(id => id === itemId).length;
-             const totalEquipped = equippedCount + artifactCount;
+             // BUG FIX: Unequip ALL items that exceed available quantity (not just one)
+             let equippedCount = Object.values(newEquipment).filter(id => id === itemId).length;
+             let artifactCount = newArtifacts.filter(id => id === itemId).length;
+             let totalEquipped = equippedCount + artifactCount;
 
-             if (totalEquipped > nextQty) {
+             // Use while loop to unequip all excess items
+             while (totalEquipped > nextQty) {
                  const artIndex = newArtifacts.findIndex(id => id === itemId);
                  if (artIndex >= 0) {
                      newArtifacts[artIndex] = null;
+                     totalEquipped--;
                  } else {
                      const slotToClear = Object.keys(newEquipment).reverse().find(key => newEquipment[key as keyof CharacterState['equipment']] === itemId);
                      if (slotToClear) {
                          newEquipment[slotToClear as keyof CharacterState['equipment']] = null;
+                         totalEquipped--;
+                     } else {
+                         // Safety: no more items to unequip
+                         break;
                      }
                  }
              }
@@ -224,7 +237,8 @@ export const useCharacter = () => {
 
   const performEvolutionRoll = (cost: number, itemName: string, onSuccess: () => void) => {
       const dc = 10 + Math.floor(cost / 1000);
-      const d20 = Math.ceil(Math.random() * 20);
+      // BUG FIX: Use standard D&D dice roll convention
+      const d20 = Math.floor(Math.random() * 20) + 1;
       const conMod = getModifier(char.attributes.CON);
       const profBonus = char.proficiencies.includes('CON') ? pb : 0;
       // Check for Glass Skin mutation (proficiency in CON saves) if applied manually or automatically
@@ -258,6 +272,8 @@ export const useCharacter = () => {
   const handleBuyTalent = (talent: Talent, free: boolean = false) => {
       const cost = talent.cost;
       if (!free && char.anomalousEssence < cost) return;
+      // BUG FIX: Prevent duplicate talents in free mode
+      if (char.talents.includes(talent.id)) return;
       if (free) {
           setChar(prev => ({ ...prev, anomalousEssence: prev.anomalousEssence, talents: [...prev.talents, talent.id] }));
           return;
@@ -366,11 +382,12 @@ export const useCharacter = () => {
       const getHitDie = (c: string) => {
         if (c === 'Tank') return 10;
         if (c === 'Support') return 8;
-        return 6; 
+        return 6;
       };
       const die = getHitDie(char.class);
       const conMod = getModifier(char.attributes.CON);
-      const roll = Math.ceil(Math.random() * die);
+      // BUG FIX: Use standard D&D dice roll convention
+      const roll = Math.floor(Math.random() * die) + 1;
       const total = Math.max(1, roll + conMod);
       setChar(prev => ({ ...prev, hpCurrent: Math.min(prev.hpMax, prev.hpCurrent + total) }));
   };

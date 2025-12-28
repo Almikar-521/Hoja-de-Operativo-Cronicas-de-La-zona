@@ -151,10 +151,19 @@ export const calculateMaxHP = (char: CharacterState): number => {
 export const calculateMaxWeight = (char: CharacterState): number => {
   const str = char.attributes.STR;
   const con = char.attributes.CON;
-  
-  // Capacidad de Carga Base (Hardcore): Fuerza + Constitución.
-  let base = str + con;
 
+  // Step 1: Capacidad de Carga Base (apply MULE exo FIRST if equipped)
+  // BUG FIX: MULE exo must be applied before talent/trait modifiers
+  let base;
+  if (char.equipment.body === 'mule_exo') {
+      // Exoesqueleto MULE: "Fuerza considerada 19"
+      const effectiveStr = Math.max(str, 19);
+      base = effectiveStr + con;
+  } else {
+      base = str + con;
+  }
+
+  // Step 2: Apply Talent and Trait modifiers to base
   // Talent: Gen Mule (+20 lbs)
   if (char.talents.includes('gen_mule')) {
       base += 20;
@@ -165,30 +174,24 @@ export const calculateMaxWeight = (char: CharacterState): number => {
       base -= 10;
   }
 
-  // Backpack Bonuses (Aligned with constants.ts)
+  // Step 3: Backpack Bonuses
   let backpackBonus = 0;
   const packId = char.equipment.backpack;
-  
+
   if (packId === 'sling') backpackBonus = 25;
   else if (packId === 'assault') backpackBonus = 45;
   else if (packId === 'expedition') backpackBonus = 70;
   else if (packId === 'mule') backpackBonus = 90;
-  else if (packId === 'anomala') backpackBonus = 999; 
+  else if (packId === 'anomala') backpackBonus = 999;
 
-  // Exoesqueleto MULE Override
-  // "Fuerza considerada 19" means we recalculate base if STR < 19
-  if (char.equipment.body === 'mule_exo') {
-      const effectiveStr = Math.max(str, 19);
-      base = effectiveStr + con;
-  }
-  
-  // Artifact Bonuses
-  if (char.equippedArtifacts.includes('guijarro_grav') || char.equippedArtifacts.includes('grav_stone')) { 
+  // Step 4: Artifact Bonuses
+  if (char.equippedArtifacts.includes('guijarro_grav') || char.equippedArtifacts.includes('grav_stone')) {
       base += 50;
   }
 
   let total = base + backpackBonus;
 
+  // Step 5: Apply Mutation penalty LAST (affects total)
   // Mutation Hollow Bones (Huesos de Pájaro)
   if (char.mutations.includes('mut_hollow_bones')) {
       total = Math.floor(total / 2);

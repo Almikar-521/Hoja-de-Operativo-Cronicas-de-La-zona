@@ -43,17 +43,16 @@ const createTestChar = (overrides: Partial<CharacterState> = {}): CharacterState
   ...overrides,
 });
 
-describe('Bug Tests - Weight Calculation with MULE Exo', () => {
-  it('BUG: Gen Mule talent lost when wearing MULE exo', () => {
-    // Without MULE exo: (10+10) + 20 (gen_mule) = 50
+describe('Bug Tests - Weight Calculation with MULE Exo (FIXED)', () => {
+  it('FIXED: Gen Mule talent now works correctly with MULE exo', () => {
+    // Without MULE exo: (10+10) + 20 (gen_mule) = 40
     const withoutExo = createTestChar({
       attributes: { ...createTestChar().attributes, STR: 10, CON: 10 },
       talents: ['gen_mule'],
     });
-    expect(calculateMaxWeight(withoutExo)).toBe(50);
+    expect(calculateMaxWeight(withoutExo)).toBe(40);
 
-    // With MULE exo: Should be (19+10) + 20 (gen_mule) = 49
-    // But actually calculates: (19+10) + 0 = 29 (BUG!)
+    // With MULE exo: (19+10) + 20 (gen_mule) = 49 ✅ FIXED
     const withExo = createTestChar({
       attributes: { ...createTestChar().attributes, STR: 10, CON: 10 },
       talents: ['gen_mule'],
@@ -61,15 +60,10 @@ describe('Bug Tests - Weight Calculation with MULE Exo', () => {
     });
 
     const result = calculateMaxWeight(withExo);
-    console.log(`MULE exo + Gen Mule result: ${result}`);
-    console.log(`Expected: 49, Actual: ${result}`);
-
-    // This will FAIL, demonstrating the bug
-    // expect(result).toBe(49); // What it SHOULD be
-    expect(result).toBe(29); // What it ACTUALLY is (bug)
+    expect(result).toBe(49); // ✅ Now works correctly!
   });
 
-  it('BUG: Fragile Bones trait lost when wearing MULE exo', () => {
+  it('FIXED: Fragile Bones trait now works correctly with MULE exo', () => {
     // Without MULE exo: (10+10) - 10 (fragile) = 10
     const withoutExo = createTestChar({
       attributes: { ...createTestChar().attributes, STR: 10, CON: 10 },
@@ -77,8 +71,7 @@ describe('Bug Tests - Weight Calculation with MULE Exo', () => {
     });
     expect(calculateMaxWeight(withoutExo)).toBe(10);
 
-    // With MULE exo: Should be (19+10) - 10 (fragile) = 19
-    // But actually calculates: (19+10) + 0 = 29 (BUG!)
+    // With MULE exo: (19+10) - 10 (fragile) = 19 ✅ FIXED
     const withExo = createTestChar({
       attributes: { ...createTestChar().attributes, STR: 10, CON: 10 },
       traits: ['trait_fragile'],
@@ -86,17 +79,11 @@ describe('Bug Tests - Weight Calculation with MULE Exo', () => {
     });
 
     const result = calculateMaxWeight(withExo);
-    console.log(`MULE exo + Fragile Bones result: ${result}`);
-    console.log(`Expected: 19, Actual: ${result}`);
-
-    // This will FAIL, demonstrating the bug
-    // expect(result).toBe(19); // What it SHOULD be
-    expect(result).toBe(29); // What it ACTUALLY is (bug)
+    expect(result).toBe(19); // ✅ Now works correctly!
   });
 
-  it('BUG: Both Gen Mule and Fragile Bones lost with MULE exo', () => {
-    // With both: Should be (19+10) + 20 (mule) - 10 (fragile) = 39
-    // But actually: (19+10) = 29
+  it('FIXED: Both Gen Mule and Fragile Bones now work with MULE exo', () => {
+    // With both: (19+10) + 20 (mule) - 10 (fragile) = 39 ✅ FIXED
     const char = createTestChar({
       attributes: { ...createTestChar().attributes, STR: 10, CON: 10 },
       talents: ['gen_mule'],
@@ -105,10 +92,35 @@ describe('Bug Tests - Weight Calculation with MULE Exo', () => {
     });
 
     const result = calculateMaxWeight(char);
-    console.log(`MULE exo + Gen Mule + Fragile Bones result: ${result}`);
-    console.log(`Expected: 39, Actual: ${result}`);
+    expect(result).toBe(39); // ✅ Now works correctly!
+  });
 
-    // expect(result).toBe(39); // What it SHOULD be
-    expect(result).toBe(29); // What it ACTUALLY is (bug)
+  it('REGRESSION: MULE exo still works without talents/traits', () => {
+    // Base case: (19+10) = 29
+    const char = createTestChar({
+      attributes: { ...createTestChar().attributes, STR: 10, CON: 10 },
+      equipment: { ...createTestChar().equipment, body: 'mule_exo' },
+    });
+    expect(calculateMaxWeight(char)).toBe(29);
+  });
+
+  it('REGRESSION: MULE exo with high STR uses actual STR', () => {
+    // STR 20 > 19, so use actual: (20+10) = 30
+    const char = createTestChar({
+      attributes: { ...createTestChar().attributes, STR: 20, CON: 10 },
+      equipment: { ...createTestChar().equipment, body: 'mule_exo' },
+    });
+    expect(calculateMaxWeight(char)).toBe(30);
+  });
+
+  it('COMPLEX: All modifiers stack correctly', () => {
+    // MULE (19+10) + Gen Mule (+20) + Backpack Assault (+45) + Gravity Stone (+50) = 144
+    const char = createTestChar({
+      attributes: { ...createTestChar().attributes, STR: 10, CON: 10 },
+      talents: ['gen_mule'],
+      equipment: { ...createTestChar().equipment, body: 'mule_exo', backpack: 'assault' },
+      equippedArtifacts: ['guijarro_grav', null, null, null, null, null],
+    });
+    expect(calculateMaxWeight(char)).toBe(144);
   });
 });
