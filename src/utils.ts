@@ -43,79 +43,80 @@ export const getArmorStats = (id: string | null): Armor => {
         return item as Armor;
     }
     // Return default unarmored stats
-    return NO_ARMOR; 
+    return NO_ARMOR;
 };
 
 // --- END OPTIMIZATION ---
 
 export const getModifier = (score: number): number => {
-  return Math.floor((score - 10) / 2);
+    return Math.floor((score - 10) / 2);
 };
 
 export const formatModifier = (score: number): string => {
-  const mod = getModifier(score);
-  return mod >= 0 ? `+${mod}` : `${mod}`;
+    const mod = getModifier(score);
+    return mod >= 0 ? `+${mod}` : `${mod}`;
 };
 
 export const calculateAC = (char: CharacterState): number => {
-  const dexMod = getModifier(char.attributes.DEX);
-  const armor = getArmorStats(char.equipment.body);
+    const dexMod = getModifier(char.attributes.DEX);
+    const armor = getArmorStats(char.equipment.body);
 
-  let ac = armor.acBase;
-  let usedDexBonus = armor.dexBonus === 99 ? dexMod : Math.min(dexMod, armor.dexBonus);
+    let ac = armor.acBase;
+    let usedDexBonus = armor.dexBonus === 99 ? dexMod : Math.min(dexMod, armor.dexBonus);
 
-  // BUG FIX: Heavy Armor & Exo should ignore negative DEX modifiers for AC
-  if ((armor.type === 'Heavy' || armor.type === 'Exo') && usedDexBonus < 0) {
-      usedDexBonus = 0;
-  }
+    // BUG FIX: Heavy Armor & Exo should ignore negative DEX modifiers for AC
+    if ((armor.type === 'Heavy' || armor.type === 'Exo') && usedDexBonus < 0) {
+        usedDexBonus = 0;
+    }
 
-  // FIX: Mutation Bark Skin (Piel Corteza) implementation
-  // Effect: CA Base 13 + Des (max 2). Only works if unarmored.
-  const isUnarmored = !char.equipment.body || char.equipment.body === 'unarmored' || char.equipment.body === '';
-  
-  if (isUnarmored && char.mutations.includes('mut_bark_skin')) {
-      const barkAC = 13;
-      const barkDex = Math.min(dexMod, 2);
-      
-      // We take the better of Standard Unarmored vs Bark Skin
-      if ((barkAC + barkDex) > (ac + dexMod)) {
-          ac = barkAC;
-          usedDexBonus = barkDex;
-      } else {
-          usedDexBonus = dexMod;
-      }
-  } 
+    // FIX: Mutation Bark Skin (Piel Corteza) implementation
+    // Effect: CA Base 13 + Des (max 2). Only works if unarmored.
+    const isUnarmored = !char.equipment.body || char.equipment.body === 'unarmored' || char.equipment.body === '';
 
-  let totalAC = ac + usedDexBonus;
-  
-  // Talent Bonuses logic
-  if (char.class === 'Tank' && char.talents.includes('tank_tier1_1')) { // Piel de Mutante
-      totalAC += 1;
-  }
+    if (isUnarmored && char.mutations.includes('mut_bark_skin')) {
+        const barkAC = 13;
+        const barkDex = Math.min(dexMod, 2);
 
-  // BUG FIX: Include Headgear and Artifact bonuses by parsing the effect string
-  // Looks for pattern "+X CA" in the item effect description
-  const extraItems = [char.equipment.head, ...char.equippedArtifacts];
-  extraItems.forEach(id => {
-      const item = getItem(id);
-      if (item && 'effect' in item && item.effect) {
-          const match = item.effect.match(/\+(\d+)\s*CA/);
-          if (match) {
-              totalAC += parseInt(match[1]);
-          }
-      }
-  });
-  
-  return totalAC;
+        // We take the better of Standard Unarmored vs Bark Skin
+        if ((barkAC + barkDex) > (ac + dexMod)) {
+            ac = barkAC;
+            usedDexBonus = barkDex;
+        } else {
+            usedDexBonus = dexMod;
+        }
+    }
+
+    let totalAC = ac + usedDexBonus;
+
+    // Talent Bonuses logic
+    if (char.class === 'Tank' && char.talents.includes('tank_tier1_1')) { // Piel de Mutante
+        totalAC += 1;
+    }
+
+    // BUG FIX: Include Headgear and Artifact bonuses by parsing the effect string
+    // Looks for pattern "+X CA" in the item effect description
+    const extraItems = [char.equipment.head, ...char.equippedArtifacts];
+    extraItems.forEach(id => {
+        const item = getItem(id);
+        // Ensure item has an effect property before checking
+        if (item && 'effect' in item && item.effect) {
+            const match = item.effect.match(/\+(\d+)\s*(?:CA|AC|Armadura|Armor)/i);
+            if (match) {
+                totalAC += parseInt(match[1]);
+            }
+        }
+    });
+
+    return totalAC;
 };
 
 export const calculateMaxHP = (char: CharacterState): number => {
     const conMod = getModifier(char.attributes.CON);
-    
+
     // Progression Table from PDF Section 3
     const progression = {
-        Tank:    [0, 10, 15, 20, 26, 32, 39, 46, 54, 62, 71],
-        DPS:     [0, 6, 10, 14, 19, 24, 30, 36, 43, 50, 58],
+        Tank: [0, 10, 15, 20, 26, 32, 39, 46, 54, 62, 71],
+        DPS: [0, 6, 10, 14, 19, 24, 30, 36, 43, 50, 58],
         Support: [0, 8, 12, 16, 21, 26, 32, 38, 45, 52, 60]
     };
 
@@ -130,7 +131,7 @@ export const calculateMaxHP = (char: CharacterState): number => {
     if (char.equippedArtifacts.includes('medula')) {
         total += char.level;
     }
-    
+
     // Minimum 1 HP per level safety
     let maxHP = Math.max(char.level, total);
 
@@ -148,52 +149,52 @@ export const calculateMaxHP = (char: CharacterState): number => {
 };
 
 export const calculateMaxWeight = (char: CharacterState): number => {
-  const str = char.attributes.STR;
-  const con = char.attributes.CON;
-  
-  // Capacidad de Carga Base (Hardcore): Fuerza + Constitución.
-  let base = str + con;
+    const str = char.attributes.STR;
+    const con = char.attributes.CON;
 
-  // Talent: Gen Mule (+20 lbs)
-  if (char.talents.includes('gen_mule')) {
-      base += 20;
-  }
+    // Capacidad de Carga Base (Hardcore): Fuerza + Constitución.
+    let base = str + con;
 
-  // Trait: Huesos de Cristal (-10 lbs)
-  if (char.traits.includes('trait_fragile')) {
-      base -= 10;
-  }
+    // Talent: Gen Mule (+20 lbs)
+    if (char.talents.includes('gen_mule')) {
+        base += 20;
+    }
 
-  // Backpack Bonuses (Aligned with constants.ts)
-  let backpackBonus = 0;
-  const packId = char.equipment.backpack;
-  
-  if (packId === 'sling') backpackBonus = 25;
-  else if (packId === 'assault') backpackBonus = 45;
-  else if (packId === 'expedition') backpackBonus = 70;
-  else if (packId === 'mule') backpackBonus = 90;
-  else if (packId === 'anomala') backpackBonus = 999; 
+    // Trait: Huesos de Cristal (-10 lbs)
+    if (char.traits.includes('trait_fragile')) {
+        base -= 10;
+    }
 
-  // Exoesqueleto MULE Override
-  // "Fuerza considerada 19" means we recalculate base if STR < 19
-  if (char.equipment.body === 'mule_exo') {
-      const effectiveStr = Math.max(str, 19);
-      base = effectiveStr + con;
-  }
-  
-  // Artifact Bonuses
-  if (char.equippedArtifacts.includes('guijarro_grav') || char.equippedArtifacts.includes('grav_stone')) { 
-      base += 50;
-  }
+    // Backpack Bonuses (Aligned with constants.ts)
+    let backpackBonus = 0;
+    const packId = char.equipment.backpack;
 
-  let total = base + backpackBonus;
+    if (packId === 'sling') backpackBonus = 25;
+    else if (packId === 'assault') backpackBonus = 45;
+    else if (packId === 'expedition') backpackBonus = 70;
+    else if (packId === 'mule') backpackBonus = 90;
+    else if (packId === 'anomala') backpackBonus = 999;
 
-  // Mutation Hollow Bones (Huesos de Pájaro)
-  if (char.mutations.includes('mut_hollow_bones')) {
-      total = Math.floor(total / 2);
-  }
+    // Exoesqueleto MULE Override
+    // "Fuerza considerada 19" means we recalculate base if STR < 19
+    if (char.equipment.body === 'mule_exo') {
+        const effectiveStr = Math.max(str, 19);
+        base = effectiveStr + con;
+    }
 
-  return total;
+    // Artifact Bonuses
+    if (char.equippedArtifacts.includes('guijarro_grav') || char.equippedArtifacts.includes('grav_stone')) {
+        base += 50;
+    }
+
+    let total = base + backpackBonus;
+
+    // Mutation Hollow Bones (Huesos de Pájaro)
+    if (char.mutations.includes('mut_hollow_bones')) {
+        total = Math.floor(total / 2);
+    }
+
+    return total;
 };
 
 export const calculateCurrentWeight = (char: CharacterState): number => {
@@ -210,28 +211,30 @@ export const calculateCurrentWeight = (char: CharacterState): number => {
 };
 
 export const calculateSpellSlots = (level: number): number[] => {
+    // Tabla de Progresión de Magia (Solo Support) - TABLAS_CORREGIDAS_COMPLETO.md
+    // Índices: [Nv1, Nv2, Nv3, Nv4, Nv5, Nv6, Nv7, Nv8, Nv9]
     const slots = [
-        [0,0,0,0,0,0,0,0,0], // Lvl 0
-        [2,0,0,0,0,0,0,0,0], // Lvl 1
-        [3,0,0,0,0,0,0,0,0], // Lvl 2
-        [4,2,0,0,0,0,0,0,0], // Lvl 3
-        [4,3,0,0,0,0,0,0,0], // Lvl 4
-        [4,3,2,0,0,0,0,0,0], // Lvl 5
-        [4,3,3,0,0,0,0,0,0], // Lvl 6
-        [4,3,3,1,0,0,0,0,0], // Lvl 7
-        [4,3,3,2,0,0,0,0,0], // Lvl 8
-        [4,3,3,3,1,0,0,0,0], // Lvl 9
-        [4,3,3,3,2,0,0,0,0], // Lvl 10
-        [4,3,3,3,2,1,0,0,0], // Lvl 11+
+        [0, 0, 0, 0, 0, 0, 0, 0, 0], // Lvl 0
+        [2, 0, 0, 0, 0, 0, 0, 0, 0], // Lvl 1
+        [3, 2, 0, 0, 0, 0, 0, 0, 0], // Lvl 2
+        [4, 3, 2, 0, 0, 0, 0, 0, 0], // Lvl 3
+        [4, 3, 3, 1, 0, 0, 0, 0, 0], // Lvl 4
+        [4, 3, 3, 2, 1, 0, 0, 0, 0], // Lvl 5
+        [4, 3, 3, 3, 2, 1, 0, 0, 0], // Lvl 6
+        [4, 3, 3, 3, 2, 1, 1, 0, 0], // Lvl 7
+        [4, 3, 3, 3, 2, 1, 1, 1, 0], // Lvl 8
+        [4, 3, 3, 3, 3, 1, 1, 1, 1], // Lvl 9
+        [4, 3, 3, 3, 3, 2, 1, 1, 1], // Lvl 10
     ];
-    
-    const index = Math.min(level, 11);
-    return slots[index] || slots[slots.length-1];
+
+    const index = Math.min(level, 10);
+    return slots[index] || slots[slots.length - 1];
 };
 
 export const calculateMaxCantrips = (level: number): number => {
-    if (level < 4) return 2;
-    if (level < 7) return 3;
-    if (level < 10) return 4;
-    return 5;
+    // Tabla de Progresión de Magia - Columna Trucos
+    if (level < 3) return 2;  // Lvl 1-2: 2 trucos
+    if (level < 6) return 3;  // Lvl 3-5: 3 trucos
+    if (level < 10) return 4; // Lvl 6-9: 4 trucos
+    return 5;                 // Lvl 10: 5 trucos
 };
