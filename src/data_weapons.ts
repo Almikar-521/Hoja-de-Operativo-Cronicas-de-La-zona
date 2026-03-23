@@ -122,7 +122,7 @@ export const WEAPON_PROPERTIES_GLOSSARY = [
 
 export const WEAPONS_CATALOG: Weapon[] = [
   // --- PISTOLAS ---
-  { id: 'glock17', name: 'Glock 17/19', type: 'Pistola', damage: '1d6', damageType: 'Perforante', range: '30/90', weight: 1.5, price: 2500, rarity: 'Civil', properties: ['Fiable', 'Bonificada'] },
+  { id: 'glock17', name: 'Glock 17/19', type: 'Pistola', damage: '2d4', damageType: 'Perforante', range: '30/90', weight: 1.5, price: 2500, rarity: 'Civil', properties: ['Fiable', 'Bonificada'] },
   { id: 'glock18c', name: 'Glock 18c', type: 'Pistola', damage: '1d6', damageType: 'Perforante', range: '20/60', weight: 1.8, price: 40000, rarity: 'Táctica', properties: ['Auto', 'Incontrolable'] },
   { id: 'fallo_cinderfall', name: 'Fallo de Cinderfall', type: 'Pistola', damage: '1d6', damageType: 'Fuerza', range: '60/120', weight: 1.5, price: 0, rarity: 'Legendaria', properties: ['Munición Infinita', 'Inestable'] },
   { id: 'tokarev', name: 'Tokarev TT', type: 'Pistola', damage: '1d8', damageType: 'Perforante', range: '40/120', weight: 1.9, price: 800, rarity: 'Civil', properties: ['Perforante'] },
@@ -144,6 +144,7 @@ export const WEAPONS_CATALOG: Weapon[] = [
   { id: 'derringer', name: 'Derringer', type: 'Pistola', damage: '1d4', damageType: 'Perforante', range: '10/30', weight: 0.5, price: 200, rarity: 'Civil', properties: ['Oculta'] },
   { id: 'ruger', name: 'Ruger Mark IV', type: 'Pistola', damage: '1d4', damageType: 'Perforante', range: '50/150', weight: 1.8, price: 450, rarity: 'Civil', properties: ['Sigilo'] },
   { id: 'ultimo_argumento', name: 'El Último Argumento', type: 'Pistola', damage: '2d12', damageType: 'Contundente', range: '30/90', weight: 4.5, price: 0, rarity: 'Legendaria', properties: ['Ejecución'] },
+  { id: 'desert_eagle', name: 'Desert Eagle', type: 'Pistola', damage: '1d10', damageType: 'Perforante', range: '60/180', weight: 4, price: 2500, rarity: 'Táctica', properties: ['Semi', 'Pesada'] },
 
   // --- SUBFUSILES ---
   { id: 'mp5', name: 'MP5 (SP5)', type: 'Subfusil', damage: '1d8', damageType: 'Perforante', range: '50/150', weight: 5.5, price: 5000, rarity: 'Civil', properties: ['Estándar'] },
@@ -164,24 +165,24 @@ export const WEAPONS_CATALOG: Weapon[] = [
   { id: 'uzi', name: 'Micro Uzi', type: 'Subfusil', damage: '1d6', damageType: 'Perforante', range: '30/90', weight: 4, price: 1500, rarity: 'Civil', properties: ['Auto', 'Ligera'] },
 
   // --- ESCOPETAS ---
-  { id: 'toz106', name: 'TOZ-106', type: 'Escopeta', damage: '1d8', damageType: 'Contundente', range: '15/30', weight: 5.5, price: 500, rarity: 'Civil', properties: ['Recarga Constante'] },
-  { id: 'desesperacion_huerfano', name: 'La Desesperación del Huérfano', type: 'Escopeta', damage: '1d8', damageType: 'Contundente', range: '15/30', weight: 5.5, price: 0, rarity: 'Legendaria', properties: ['Polvo y Silencio'] },
-  { id: 'spr310', name: 'SPR310', type: 'Escopeta', damage: '1d8', damageType: 'Contundente', range: '20/60', weight: 7.0, price: 1200, rarity: 'Caceria', properties: ['Doble Cañón'] },
-  { id: 'rugido_guardabosques', name: 'El Rugido del Guardabosques', type: 'Escopeta', damage: '1d8', damageType: 'Contundente', range: '20/60', weight: 7.0, price: 0, rarity: 'Legendaria', properties: ['Onda de Choque'] },
-  { id: 'm870_c', name: 'M870 (Civil)', type: 'Escopeta', damage: '1d8', damageType: 'Contundente', range: '20/60', weight: 7.5, price: 1800, rarity: 'Civil', properties: ['Corredera'] },
-  { id: 'm870_ca', name: 'M870 (Caza)', type: 'Escopeta', damage: '1d8', damageType: 'Contundente', range: '40/80', weight: 8.0, price: 2500, rarity: 'Caceria', properties: ['Precisión'] },
-  { id: 'm870_t', name: 'M870 (Táctica)', type: 'Escopeta', damage: '1d8', damageType: 'Contundente', range: '20/60', weight: 7.0, price: 6000, rarity: 'Táctica', properties: ['Breaching'] },
-  { id: 'fantasma_trinchera', name: 'El Fantasma de la Trinchera', type: 'Escopeta', damage: '1d8', damageType: 'Contundente', range: '20/60', weight: 7.0, price: 0, rarity: 'Legendaria', properties: ['Inevitable'] },
-  { id: 'mp153_c', name: 'MP-153 (Civil)', type: 'Escopeta', damage: '1d8', damageType: 'Contundente', range: '30/90', weight: 8.0, price: 2200, rarity: 'Civil', properties: ['Semiauto'] },
-  { id: 'mp153_ca', name: 'MP-153 (Caza)', type: 'Escopeta', damage: '1d8', damageType: 'Contundente', range: '40/100', weight: 8.5, price: 3000, rarity: 'Caceria', properties: ['Precisa'] },
-  { id: 'mp153_t', name: 'MP-153 (Táctica)', type: 'Escopeta', damage: '1d8', damageType: 'Contundente', range: '30/90', weight: 8.2, price: 8000, rarity: 'Táctica', properties: ['Semiauto'] },
+  { id: 'toz106', name: 'TOZ-106', type: 'Escopeta', damage: '1d8', damageType: 'Perforante', range: '15/30', weight: 5.5, price: 500, rarity: 'Civil', properties: ['Recarga Constante'] },
+  { id: 'desesperacion_huerfano', name: 'La Desesperación del Huérfano', type: 'Escopeta', damage: '1d8', damageType: 'Perforante', range: '15/30', weight: 5.5, price: 0, rarity: 'Legendaria', properties: ['Polvo y Silencio'] },
+  { id: 'spr310', name: 'SPR310', type: 'Escopeta', damage: '1d8', damageType: 'Perforante', range: '20/60', weight: 7.0, price: 1200, rarity: 'Caceria', properties: ['Doble Cañón'] },
+  { id: 'rugido_guardabosques', name: 'El Rugido del Guardabosques', type: 'Escopeta', damage: '1d8', damageType: 'Perforante', range: '20/60', weight: 7.0, price: 0, rarity: 'Legendaria', properties: ['Onda de Choque'] },
+  { id: 'm870_c', name: 'M870 (Civil)', type: 'Escopeta', damage: '1d8', damageType: 'Perforante', range: '20/60', weight: 7.5, price: 1800, rarity: 'Civil', properties: ['Corredera'] },
+  { id: 'm870_ca', name: 'M870 (Caza)', type: 'Escopeta', damage: '1d8', damageType: 'Perforante', range: '40/80', weight: 8.0, price: 2500, rarity: 'Caceria', properties: ['Precisión'] },
+  { id: 'm870_t', name: 'M870 (Táctica)', type: 'Escopeta', damage: '1d8', damageType: 'Perforante', range: '20/60', weight: 7.0, price: 6000, rarity: 'Táctica', properties: ['Breaching'] },
+  { id: 'fantasma_trinchera', name: 'El Fantasma de la Trinchera', type: 'Escopeta', damage: '1d8', damageType: 'Perforante', range: '20/60', weight: 7.0, price: 0, rarity: 'Legendaria', properties: ['Inevitable'] },
+  { id: 'mp153_c', name: 'MP-153 (Civil)', type: 'Escopeta', damage: '1d8', damageType: 'Perforante', range: '30/90', weight: 8.0, price: 2200, rarity: 'Civil', properties: ['Semiauto'] },
+  { id: 'mp153_ca', name: 'MP-153 (Caza)', type: 'Escopeta', damage: '1d8', damageType: 'Perforante', range: '40/100', weight: 8.5, price: 3000, rarity: 'Caceria', properties: ['Precisa'] },
+  { id: 'mp153_t', name: 'MP-153 (Táctica)', type: 'Escopeta', damage: '1d8', damageType: 'Perforante', range: '30/90', weight: 8.2, price: 8000, rarity: 'Táctica', properties: ['Semiauto'] },
   { id: 'respiracion_dragon', name: 'La Respiración del Dragón', type: 'Escopeta', damage: '1d8', damageType: 'Fuego', range: '15 (Cono)', weight: 8.2, price: 0, rarity: 'Legendaria', properties: ['Fuego'] },
-  { id: 'saiga12_c', name: 'Saiga-12 (Civil)', type: 'Escopeta', damage: '1d8', damageType: 'Contundente', range: '30/90', weight: 8.0, price: 4000, rarity: 'Civil', properties: ['Cargador'] },
-  { id: 'saiga12_t', name: 'Saiga-12 (Táctica)', type: 'Escopeta', damage: '1d8', damageType: 'Contundente', range: '30/90', weight: 8.5, price: 16000, rarity: 'Táctica', properties: ['Supresión'] },
-  { id: 'martillo_kult', name: 'El Martillo del Kult', type: 'Escopeta', damage: '1d8', damageType: 'Contundente', range: '30/90', weight: 8.5, price: 0, rarity: 'Legendaria', properties: ['Terror'] },
-  { id: 'benelli', name: 'Benelli M4', type: 'Escopeta', damage: '1d8', damageType: 'Contundente', range: '30/90', weight: 8.4, price: 25000, rarity: 'Táctica', properties: ['Fiabilidad Extrema'] },
-  { id: 'ks23', name: 'KS-23 (Cal 4)', type: 'Escopeta', damage: '3d8', damageType: 'Contundente', range: '40/120', weight: 10.0, price: 10000, rarity: 'Táctica', properties: ['Impacto Masivo'] },
-  { id: 'remington1100', name: 'Remington 1100', type: 'Escopeta', damage: '1d8', damageType: 'Contundente', range: '40/100', weight: 7.5, price: 2800, rarity: 'Caceria', properties: ['Suave'] },
+  { id: 'saiga12_c', name: 'Saiga-12 (Civil)', type: 'Escopeta', damage: '1d8', damageType: 'Perforante', range: '30/90', weight: 8.0, price: 4000, rarity: 'Civil', properties: ['Cargador'] },
+  { id: 'saiga12_t', name: 'Saiga-12 (Táctica)', type: 'Escopeta', damage: '1d8', damageType: 'Perforante', range: '30/90', weight: 8.5, price: 16000, rarity: 'Táctica', properties: ['Supresión'] },
+  { id: 'martillo_kult', name: 'El Martillo del Kult', type: 'Escopeta', damage: '1d8', damageType: 'Perforante', range: '30/90', weight: 8.5, price: 0, rarity: 'Legendaria', properties: ['Terror'] },
+  { id: 'benelli', name: 'Benelli M4', type: 'Escopeta', damage: '1d8', damageType: 'Perforante', range: '30/90', weight: 8.4, price: 25000, rarity: 'Táctica', properties: ['Fiabilidad Extrema'] },
+  { id: 'ks23', name: 'KS-23 (Cal 4)', type: 'Escopeta', damage: '3d8', damageType: 'Perforante', range: '40/120', weight: 10.0, price: 10000, rarity: 'Táctica', properties: ['Impacto Masivo'] },
+  { id: 'remington1100', name: 'Remington 1100', type: 'Escopeta', damage: '1d8', damageType: 'Perforante', range: '40/100', weight: 7.5, price: 2800, rarity: 'Caceria', properties: ['Suave'] },
   { id: 'corazon_fuego', name: 'Corazón de Fuego', type: 'Escopeta', damage: '1d8', damageType: 'Fuego', range: '30/90', weight: 8.2, price: 0, rarity: 'Legendaria', properties: ['Daño Continuo'] },
   { id: 'recortada', name: 'Recortada', type: 'Escopeta', damage: '2d8', damageType: 'Perforante', range: '15/30', weight: 4, price: 400, rarity: 'Chatarra', properties: ['Dispersión', 'Oculta'] },
 
@@ -258,7 +259,7 @@ export const WEAPONS_CATALOG: Weapon[] = [
   { id: 'llave_maestra', name: 'La Llave Maestra', type: 'Sniper', damage: '2d20', damageType: 'Perforante', range: '500/1500', weight: 28.0, price: 0, rarity: 'Legendaria', properties: ['Demolición'] },
   { id: 'barrett', name: 'Barrett M82 (.50)', type: 'Sniper', damage: '2d20', damageType: 'Perforante', range: '600/1800', weight: 30.0, price: 150000, rarity: 'Táctica', properties: ['Anti-Estructura'] },
   { id: 'rompemundos', name: 'El Rompemundos', type: 'Sniper', damage: '2d20', damageType: 'Perforante', range: '600/1800', weight: 30.0, price: 0, rarity: 'Legendaria', properties: ['Onda'] },
-  { id: 'ptrs41', name: 'PTRS-41', type: 'Sniper', damage: '3d10', damageType: 'Perforante', range: '300/900', weight: 46.0, price: 20000, rarity: 'Táctica', properties: ['Obsoleto'] },
+  { id: 'ptrd41', name: 'PTRD-41', type: 'Sniper', damage: '3d12', damageType: 'Perforante', range: '800/2400', weight: 38.0, price: 20000, rarity: 'Táctica', properties: ['Obsoleto'] },
   { id: 'puno_hierro', name: 'El Puño de Hierro', type: 'Sniper', damage: '3d10', damageType: 'Perforante', range: '300/900', weight: 46.0, price: 0, rarity: 'Legendaria', properties: ['Perforador'] },
   { id: 'ntw20', name: 'NTW-20 (20mm)', type: 'Sniper', damage: '4d12', damageType: 'Perforante', range: '500/1500', weight: 68.0, price: 180000, rarity: 'Táctica', properties: ['Explosivo'] },
   { id: 'juicio_final', name: 'El Juicio Final', type: 'Sniper', damage: '4d12', damageType: 'Plasma', range: '500/1500', weight: 68.0, price: 0, rarity: 'Legendaria', properties: ['Plasma'] },
@@ -286,8 +287,8 @@ export const WEAPONS_CATALOG: Weapon[] = [
   { id: 'bate_porra', name: 'Bate / Porra', type: 'Melee', damage: '1d6', damageType: 'Contundente', range: '5', weight: 3.0, price: 20, rarity: 'Civil', properties: ['Ligera'] },
   { id: 'espada_larga', name: 'Espada Larga', type: 'Melee', damage: '1d8', damageType: 'Cortante', range: '5', weight: 3.0, price: 500, rarity: 'Táctica', properties: ['Versátil'] },
   { id: 'martillo_guerra', name: 'Martillo de Guerra', type: 'Melee', damage: '1d8', damageType: 'Contundente', range: '5', weight: 5.0, price: 250, rarity: 'Táctica', properties: ['Versátil'] },
-  { id: 'gran_espada', name: 'Gran Espada', type: 'Melee', damage: '2d6', damageType: 'Cortante', range: '5', weight: 6.0, price: 1200, rarity: 'Táctica', properties: ['Pesada'] },
-  { id: 'motosierra', name: 'Motosierra', type: 'Melee', damage: '2d6', damageType: 'Cortante', range: '5', weight: 15.0, price: 2000, rarity: 'Táctica', properties: ['Pesada', 'Ruidosa'] },
+  { id: 'gran_espada', name: 'Gran Espada', type: 'Melee', damage: '2d6', damageType: 'Cortante', range: '5', weight: 6.0, price: 1200, rarity: 'Táctica', properties: ['Pesada', 'Dos Manos'] },
+  { id: 'motosierra', name: 'Motosierra', type: 'Melee', damage: '2d6', damageType: 'Cortante', range: '5', weight: 15.0, price: 2000, rarity: 'Táctica', properties: ['Pesada', 'Ruidosa', 'Dos Manos'] },
 
   // --- SMG FALTANTES ---
   { id: 'pp19_bizon', name: 'PP-19 Bizon', type: 'Subfusil', damage: '1d6', damageType: 'Perforante', range: '40/120', weight: 5.0, price: 1800, rarity: 'Táctica', properties: ['Auto', 'Fiable'] },

@@ -112,7 +112,7 @@ export const useCharacter = () => {
     const initiative = useMemo(() => {
         let init = getModifier(char.attributes.DEX);
         if (char.class === 'DPS' && char.talents.includes('dps_reflex')) init += pb;
-        if (char.traits.includes('trait_alert')) init += 5;
+        if (char.talents.includes('gen_alert')) init += 5;
         if (char.mutations.includes('mut_living_shadow')) init -= 5;
         return init;
     }, [char.attributes.DEX, char.talents, char.traits, char.mutations, pb, char.class]);

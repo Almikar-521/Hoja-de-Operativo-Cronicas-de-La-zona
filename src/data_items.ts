@@ -11,27 +11,27 @@ export const ITEMS_CATALOG: Item[] = [
     { id: 'ammo_4ga_shrapnel', name: 'Caja Calibre 4 Shrapnel (10)', type: 'Ammo', weight: 3, cost: 200, maxStack: 5, effect: '3d8 Daño. Área: Cono 30ft. Salv STR CD 14 o Prone.' },
 
     // ARTIFACTS (V5)
-    // Tier 1
-    { id: 'crono_estatilla', name: 'Crono-Estatilla', type: 'Artifact', tier: 1, weight: 1, cost: 0, maxStack: 1, effect: 'Pasiva: +1 Iniciativa. Activa (2/LR): "Bullet Time". Reacción +2 Salv DEX, Mover Doble.' },
-    { id: 'corazon_acero', name: 'Corazón de Acero', type: 'Artifact', tier: 1, weight: 2, cost: 0, maxStack: 1, effect: 'Pasiva: +2 Atletismo. Resistencia Veneno. Activa (1/SR): Acción Bonus Sobrecarga Adrenal.' },
-    { id: 'chispa_fria', name: 'La Chispa Fría', type: 'Artifact', tier: 1, weight: 1, cost: 0, maxStack: 1, effect: 'Pasiva: +1 Arcano. Resistencia Eléctrica. Activa (1/SR): Acción. Pulso 5ft Aturdido.' },
-    { id: 'guijarro_grav', name: 'Guijarro Gravitacional', type: 'Artifact', tier: 1, weight: 5, cost: 0, maxStack: 1, effect: 'Pasiva: +2 Acrobacias. +5ft Salto. Activa (3/SR): Reacción. Salto Ligero (Mitad daño caída).' },
-    { id: 'ojo_vidente', name: 'Ojo del Vidente', type: 'Artifact', tier: 1, weight: 1, cost: 0, maxStack: 1, effect: 'Pasiva: +2 Investigación. No puedes ser sorprendido. Activa (1/LR): Visión Verdadera 1 min.' },
-    { id: 'musgo', name: 'Musgo Filtrador', type: 'Artifact', tier: 1, weight: 0.5, cost: 0, maxStack: 1, effect: 'Pasiva: +1 Salv. Veneno. Activa (3/LR): Inmunidad gas/veneno inhalado 1 min.' },
-    // Tier 2
-    { id: 'bateria_interna', name: 'Batería Interna', type: 'Artifact', tier: 2, weight: 1, cost: 0, maxStack: 1, effect: 'Pasiva: +1 Salv DEX. Resistencia Eléctrica. Activa (1/LR): Ataque eléctrico daño máximo.' },
-    { id: 'manto_susurros', name: 'Manto de Susurros', type: 'Artifact', tier: 2, weight: 1, cost: 0, maxStack: 1, effect: 'Pasiva: +2 Sigilo/Engaño. Activa (1/SR): Invisibilidad.' },
-    { id: 'flor_fuego', name: 'Flor de Fuego', type: 'Artifact', tier: 2, weight: 1, cost: 0, maxStack: 1, effect: 'Pasiva: Resistencia Fuego. Ataques +1d4 Fuego. Activa (1/LR): Explosión 10ft 3d6 Fuego.' },
-    { id: 'nudo_espacial', name: 'Nudo Espacial', type: 'Artifact', tier: 2, weight: 2, cost: 0, maxStack: 1, effect: 'Pasiva: Ignoras terreno difícil. Activa (2/SR): Teleport 10ft reacción.' },
-    { id: 'medula', name: 'Médula Ósea Reforzada', type: 'Artifact', tier: 2, weight: 2, cost: 0, maxStack: 1, effect: 'Pasiva: +1 HP por Nivel. Gasta 1 DG para Ventaja Salv CON.' },
-    { id: 'resonador', name: 'Resonador Armónico', type: 'Artifact', tier: 2, weight: 1, cost: 0, maxStack: 1, effect: 'Pasiva: Ventaja Percepción (Oído). Inmune Sordera. Activa (1/SR): Grito Sónico 15ft 2d8 Trueno.' },
-    // Tier 3
-    { id: 'nucleo_grav', name: 'Núcleo Gravitacional', type: 'Artifact', tier: 3, weight: 10, cost: 0, maxStack: 1, effect: 'Pasiva: Ventaja Fuerza. Resistencia Contundente. Activa (1/LR): Empuja 15ft.' },
-    { id: 'matriz_psi', name: 'Matriz Psiónica', type: 'Artifact', tier: 3, weight: 1, cost: 0, maxStack: 1, effect: 'Pasiva: Resistencia Psíquico. +1 CD hechizos. Activa (1/LR): Dominio Mental.' },
-    { id: 'corazon_llama', name: 'Corazón Llama Eterna', type: 'Artifact', tier: 3, weight: 1, cost: 0, maxStack: 1, effect: 'Pasiva: Inmunidad Fuego. Cura 1d4/ronda en fuego. Activa (1/LR): Torrente Ígneo 6d6.' },
-    { id: 'simulacro', name: 'Simulacro Temporal', type: 'Artifact', tier: 3, weight: 1, cost: 0, maxStack: 1, effect: 'Pasiva: Ventaja Iniciativa. Activa (1/LR): Rebobinar daño.' },
-    { id: 'crisalida', name: 'Crisálida Adaptativa', type: 'Artifact', tier: 3, weight: 3, cost: 0, maxStack: 1, effect: 'Pasiva: +1 CA. Regen 1 HP/ronda. Activa (1/LR): Gana Resistencia daño 1h.' },
-    { id: 'silenciador', name: 'Silenciador de Realidad', type: 'Artifact', tier: 3, weight: 1, cost: 0, maxStack: 1, effect: 'Pasiva: Inmune Adivinación. Ventaja Sigilo. Activa (1/SR): Silencio 20ft.' },
+    // Tier 1 (Costo: 1,000 EA)
+    { id: 'crono_estatilla', name: 'Crono-Estatilla', type: 'Artifact', tier: 1, weight: 1, cost: 1000, maxStack: 1, effect: 'Pasiva: +1 Iniciativa. Activa (2/LR): "Bullet Time". Reacción +2 Salv DEX, Mover Doble.' },
+    { id: 'corazon_acero', name: 'Corazón de Acero', type: 'Artifact', tier: 1, weight: 2, cost: 1000, maxStack: 1, effect: 'Pasiva: +2 Atletismo. Resistencia Veneno. Activa (1/SR): Acción Bonus Sobrecarga Adrenal.' },
+    { id: 'chispa_fria', name: 'La Chispa Fría', type: 'Artifact', tier: 1, weight: 1, cost: 1000, maxStack: 1, effect: 'Pasiva: +1 Arcano/Percepción. Resistencia Eléctrica. Activa (1/SR): Acción. Pulso 5ft Aturdido.' },
+    { id: 'guijarro_grav', name: 'Guijarro Gravitacional', type: 'Artifact', tier: 1, weight: 5, cost: 1000, maxStack: 1, effect: 'Pasiva: +2 Acrobacias. +5ft Salto. Activa (3/SR): Reacción. Salto Ligero (Mitad daño caída).' },
+    { id: 'ojo_vidente', name: 'Ojo del Vidente', type: 'Artifact', tier: 1, weight: 1, cost: 1000, maxStack: 1, effect: 'Pasiva: +2 Investigación. No puedes ser sorprendido. Activa (1/LR): Visión Verdadera 1 min.' },
+    { id: 'musgo', name: 'Musgo Filtrador', type: 'Artifact', tier: 1, weight: 0.5, cost: 1000, maxStack: 1, effect: 'Pasiva: +1 Salv. Veneno. Activa (3/LR): Inmunidad gas/veneno inhalado 1 min.' },
+    // Tier 2 (Costo: 3,000 EA)
+    { id: 'bateria_interna', name: 'Batería Interna', type: 'Artifact', tier: 2, weight: 1, cost: 3000, maxStack: 1, effect: 'Pasiva: +1 Salv DEX. Resistencia Eléctrica. Activa (1/LR): Ataque eléctrico daño máximo.' },
+    { id: 'manto_susurros', name: 'Manto de Susurros', type: 'Artifact', tier: 2, weight: 1, cost: 3000, maxStack: 1, effect: 'Pasiva: +2 Sigilo/Engaño. Activa (1/SR): Invisibilidad.' },
+    { id: 'flor_fuego', name: 'Flor de Fuego', type: 'Artifact', tier: 2, weight: 1, cost: 3000, maxStack: 1, effect: 'Pasiva: Resistencia Fuego. Ataques desarmados +1d4 Fuego. Activa (1/LR): Explosión 10ft 3d6 Fuego (Salv DES CD 14 mitad).' },
+    { id: 'nudo_espacial', name: 'Nudo Espacial', type: 'Artifact', tier: 2, weight: 2, cost: 3000, maxStack: 1, effect: 'Pasiva: Ignoras terreno difícil. +1 CA vs ataques a distancia. Activa (2/SR): Teleport 10ft reacción.' },
+    { id: 'medula', name: 'Médula Ósea Reforzada', type: 'Artifact', tier: 2, weight: 2, cost: 3000, maxStack: 1, effect: 'Pasiva: +1 Dado de Golpe máximo. Gasta 1 DG para Ventaja Salv CON por 1 hora.' },
+    { id: 'resonador', name: 'Resonador Armónico', type: 'Artifact', tier: 2, weight: 1, cost: 3000, maxStack: 1, effect: 'Pasiva: Ventaja Percepción (Oído). Inmune Sordera. Activa (1/SR): Grito Sónico 15ft 2d8 Trueno (Salv CON CD 13 mitad).' },
+    // Tier 3 (Costo: 6,000 EA)
+    { id: 'nucleo_grav', name: 'Núcleo Gravitacional', type: 'Artifact', tier: 3, weight: 10, cost: 6000, maxStack: 1, effect: 'Pasiva: Ventaja Fuerza (Atletismo). Resistencia Contundente. Activa (1/LR): Empuja 15ft radio 10ft (Salv FUE CD 15).' },
+    { id: 'matriz_psi', name: 'Matriz Psiónica', type: 'Artifact', tier: 3, weight: 1, cost: 6000, maxStack: 1, effect: 'Pasiva: Resistencia Psíquico. +1 CD hechizos INT/SAB/CAR. Activa (1/LR): Dominio Mental (Salv SAB CD 15).' },
+    { id: 'corazon_llama', name: 'Corazón Llama Eterna', type: 'Artifact', tier: 3, weight: 1, cost: 6000, maxStack: 1, effect: 'Pasiva: Inmunidad Fuego. Cura 1d4/ronda en fuego. Activa (1/LR): Torrente Ígneo línea 30ft 6d6 Fuego (Salv DES CD 15 mitad).' },
+    { id: 'simulacro', name: 'Simulacro Temporal', type: 'Artifact', tier: 3, weight: 1, cost: 6000, maxStack: 1, effect: 'Pasiva: Ventaja Iniciativa. Inmune a envejecimiento mágico. Activa (1/LR): Rebobinar daño (vuelve a HP y posición del turno anterior).' },
+    { id: 'crisalida', name: 'Crisálida Adaptativa', type: 'Artifact', tier: 3, weight: 3, cost: 6000, maxStack: 1, effect: 'Pasiva: +1 CA. Regen 1 HP/ronda si >0 HP. Activa (1/LR): Gana Resistencia a un daño por 1h.' },
+    { id: 'silenciador', name: 'Silenciador de Realidad', type: 'Artifact', tier: 3, weight: 1, cost: 6000, maxStack: 1, effect: 'Pasiva: Inmune Adivinación. Ventaja Sigilo. Activa (1/SR): Silencio 20ft por 1 min.' },
     // Tier 4
     { id: 'corazon_cataclismo', name: 'Corazón del Cataclismo', type: 'Artifact', tier: 4, weight: 5, cost: 0, maxStack: 1, effect: 'Pasiva: +1 a todo. Inmune Anomalías. Activa (1/Semana): Reescribir Realidad.' },
     { id: 'fragmento_monolito', name: 'Fragmento del Monolito', type: 'Artifact', tier: 4, weight: 2, cost: 0, maxStack: 1, effect: 'Pasiva: Inmunidad Psíquico. Detectar Pensamientos. Activa (1/LR): Voluntad del Monolito (Domina).' },
@@ -50,11 +50,11 @@ export const ITEMS_CATALOG: Item[] = [
     { id: 'ammo_762_fmj', name: 'Caja 7.62mm FMJ (20)', type: 'Ammo', weight: 1.5, cost: 120, maxStack: 10, effect: 'Estándar.' },
     { id: 'ammo_308', name: 'Caja .308 Win (20)', type: 'Ammo', weight: 2, cost: 150, maxStack: 10, effect: '+2 Daño base.' },
     { id: 'ammo_50bmg', name: 'Caja .50 BMG (10)', type: 'Ammo', weight: 3, cost: 4000, maxStack: 5, effect: 'Anti-Material. +5 Atq / +10 Daño vs Blindaje.' },
-    { id: 'ammo_thermal', name: 'Munición Quemadora (10)', type: 'Ammo', weight: 1, cost: 200, maxStack: 5, effect: 'Añade +1d4 daño de Fuego.' },
-    { id: 'ammo_electric', name: 'Munición Estática (10)', type: 'Ammo', weight: 1, cost: 200, maxStack: 5, effect: 'Añade +1d4 daño Eléctrico.' },
-    { id: 'ammo_cryo', name: 'Munición Criogénica (10)', type: 'Ammo', weight: 1, cost: 300, maxStack: 5, effect: 'Añade +1d6 daño Frío. Slow.' },
-    { id: 'ammo_acid', name: 'Munición Corrosiva (10)', type: 'Ammo', weight: 1, cost: 300, maxStack: 5, effect: 'Añade +1d6 daño Ácido. -1 CA.' },
-    { id: 'ammo_psychic', name: 'Munición Psíquica (5)', type: 'Ammo', weight: 0.5, cost: 500, maxStack: 5, effect: '+1d10 Psíquico. Salv SAB o Asustado.' },
+    { id: 'ammo_thermal', name: 'Munición Quemadora (10)', type: 'Ammo', weight: 1, cost: 200, maxStack: 5, effect: '+1d4 Fuego. Posibilidad de incendiar al objetivo.' },
+    { id: 'ammo_electric', name: 'Munición Estática (10)', type: 'Ammo', weight: 1, cost: 200, maxStack: 5, effect: '+1d4 Eléctrico. Desventaja a robots/drones en su sig. turno.' },
+    { id: 'ammo_cryo', name: 'Munición Criogénica (10)', type: 'Ammo', weight: 1, cost: 300, maxStack: 5, effect: '+1d6 Frío. Reduce velocidad del objetivo en 10 pies.' },
+    { id: 'ammo_acid', name: 'Munición Corrosiva (10)', type: 'Ammo', weight: 1, cost: 300, maxStack: 5, effect: '+1d6 Ácido. Reduce CA de la armadura en -1 (permanente).' },
+    { id: 'ammo_psychic', name: 'Munición Psíquica (5)', type: 'Ammo', weight: 0.5, cost: 500, maxStack: 5, effect: '+1d10 Psíquico. Salv SAB o pierde Reacciones.' },
     { id: 'ammo_force', name: 'Munición Anuladora (5)', type: 'Ammo', weight: 0.5, cost: 800, maxStack: 5, effect: '1d4 Fuerza. Impide curación.' },
 
     // AMMO - PISTOL/SMG CALIBERS
@@ -101,11 +101,11 @@ export const ITEMS_CATALOG: Item[] = [
     { id: 'ammo_20mm', name: 'Caja 20mm HE (10)', type: 'Ammo', weight: 5, cost: 8000, maxStack: 3, effect: 'Explosiva. Daño en radio 5 pies.' },
 
     // MEDICAL & FOOD
-    { id: 'venda', name: 'Venda Aséptica', type: 'Medical', weight: 0.1, cost: 20, maxStack: 10, effect: 'Detiene Sangrado. Estabiliza (CD 10).' },
-    { id: 'medkit_basico', name: 'Kit Médico AI-2', type: 'Medical', weight: 1, cost: 100, maxStack: 5, effect: 'Cura 1d4+1 HP.' },
-    { id: 'medkit_avanzado', name: 'Kit Militar IFAK', type: 'Medical', weight: 1, cost: 300, maxStack: 3, effect: 'Cura 2d4+2 HP y elimina Sangrado.' },
-    { id: 'morfina', name: 'Morfina', type: 'Medical', weight: 0.1, cost: 150, maxStack: 5, effect: '5 HP Temp. Elimina Dolor.' },
-    { id: 'kit_cirugia', name: 'Kit Cirugía', type: 'Medical', weight: 2, cost: 800, maxStack: 1, effect: 'Repara Fractura (Medicina CD 15).' },
+    { id: 'venda', name: 'Venda Aséptica', type: 'Medical', weight: 0.1, cost: 20, maxStack: 10, effect: 'Detiene Sangrado.' },
+    { id: 'medkit_basico', name: 'Kit Médico AI-2', type: 'Medical', weight: 1, cost: 100, maxStack: 5, effect: 'Cura 1d4+1 HP (3 usos).' },
+    { id: 'medkit_avanzado', name: 'Kit Militar IFAK', type: 'Medical', weight: 1, cost: 300, maxStack: 3, effect: 'Cura 2d4+2 HP + Detiene Sangrado (2 usos).' },
+    { id: 'morfina', name: 'Morfina', type: 'Medical', weight: 0.1, cost: 150, maxStack: 5, effect: '5 HP Temp + Ignora dolor (10 min).' },
+    { id: 'kit_cirugia', name: 'Kit Cirugía', type: 'Medical', weight: 2, cost: 800, maxStack: 1, effect: 'Repara extremidad rota (1 min).' },
     { id: 'antirrad', name: 'Antirrad', type: 'Medical', weight: 0.1, cost: 400, maxStack: 5, effect: 'Reduce 1d4 Radiación. Causa Fatiga.' },
     { id: 'estimulante', name: 'Estimulante Combate', type: 'Medical', weight: 0.1, cost: 500, maxStack: 5, effect: 'Acción extra. Luego Fatiga.' },
     { id: 'agua', name: 'Agua Purificada (1L)', type: 'Food', weight: 1, cost: 20, maxStack: 5, effect: '1 día de agua. Esencial.' },
@@ -126,8 +126,11 @@ export const ITEMS_CATALOG: Item[] = [
 
     // EXPLOSIVES
     { id: 'granada_humo', name: 'Granada Humo M8', type: 'Explosive', weight: 1, cost: 50, maxStack: 5, effect: 'Nube 20ft. Visibilidad nula.' },
-    { id: 'granada_frag', name: 'Granada Frag M67', type: 'Explosive', weight: 1, cost: 350, maxStack: 5, effect: '20ft radio. 3d6 Perforante. DEX CD 13 mitad.' },
+    { id: 'granada_frag', name: 'Granada Frag M67', type: 'Explosive', weight: 1, cost: 350, maxStack: 5, effect: '20ft radio. 3d6 Perforante. DEX CD 14 mitad.' },
     { id: 'bomba_mol', name: 'Bomba Moléculas', type: 'Explosive', weight: 1, cost: 1200, maxStack: 2, effect: '10ft radio. 5d6 Plasma. Derrite armadura.' },
+    { id: 'mina_antipersonal', name: 'Mina Antipersonal', type: 'Explosive', weight: 2, cost: 600, maxStack: 3, effect: '15ft radio. 4d6 Perforante. Salv DES CD 15 mitad.' },
+    { id: 'c4_bloque', name: 'C4 (1 bloque)', type: 'Explosive', weight: 2, cost: 1000, maxStack: 3, effect: '20ft radio. 6d6 Explosivo. Salv DES CD 15 mitad. Control remoto.' },
+    { id: 'granada_emp', name: 'Granada EMP', type: 'Explosive', weight: 1, cost: 2000, maxStack: 3, effect: '30ft radio. Deshabilita electrónica 10 minutos.' },
 
     // TECH
     { id: 'filtro_i', name: 'Filtro Básico (Tipo I)', type: 'Tool', weight: 0.5, cost: 80, maxStack: 5, effect: '1h. Polvo/Humo.' },
